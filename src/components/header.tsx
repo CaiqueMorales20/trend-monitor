@@ -1,7 +1,7 @@
 'use client'
 
 // import { useQuery } from '@tanstack/react-query'
-import { Blocks, ChartColumnIncreasing, Home } from 'lucide-react'
+import { ArrowUpRight, Blocks, ChartColumnIncreasing, Home } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
 
@@ -31,6 +31,10 @@ export function Header() {
           <NavLink to="/dashboard">
             <ChartColumnIncreasing size={16} />
             Dashboard
+          </NavLink>
+          <NavLink to="/sales">
+            <ArrowUpRight size={16} />
+            Sales
           </NavLink>
         </nav>
 
