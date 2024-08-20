@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.container-c{
+  @apply w-[90vw] mx-auto
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

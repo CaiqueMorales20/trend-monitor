@@ -14,7 +14,7 @@ export function NavLink({
 }) {
   const pathname = usePathname()
 
-  const baseClass = 'flex gap-2 text-sm items-center'
+  const baseClass = 'flex gap-2 base items-center'
   const activeClass = 'font-bold'
 
   return (

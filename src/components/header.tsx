@@ -1,20 +1,29 @@
+'use client'
+
+// import { useQuery } from '@tanstack/react-query'
 import { Blocks, ChartColumnIncreasing, Home } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
 
+// import { getBusinessById } from '@/utils/get-business-by-id'
 import { NavLink } from './nav-link'
 import { ProfileDropdown } from './profile-dropdown'
 import { ThemeToggle } from './ui/theme-toggle'
 
 export function Header() {
+  // const { data } = useQuery({
+  //   queryKey: ['business'],
+  //   queryFn: () => getBusinessById({ id: 3 }),
+  // })
+
   return (
     <header className="border-b">
-      <div className="mx-auto flex h-20 w-[90%] items-center gap-4">
+      <div className="mx-auto flex h-16 w-[90vw] items-center gap-4">
         <Blocks />
 
         <Separator orientation="vertical" className="h-[60%]" />
 
-        <nav className="flex gap-4">
+        <nav className="flex gap-6">
           <NavLink to="/">
             <Home size={16} />
             Home
@@ -27,7 +36,7 @@ export function Header() {
 
         <div className="ml-auto flex gap-2">
           <ThemeToggle />
-          <ProfileDropdown />
+          <ProfileDropdown name={'Caique Morales'} />
         </div>
       </div>
     </header>
