@@ -1,7 +1,7 @@
 'use client'
 
 // import { useQuery } from '@tanstack/react-query'
-import { ArrowUpRight, Blocks, ChartColumnIncreasing, Home } from 'lucide-react'
+import { ArrowUpRight, Blocks, ChartColumnIncreasing } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
 
@@ -24,10 +24,6 @@ export function Header() {
         <Separator orientation="vertical" className="h-[60%]" />
 
         <nav className="flex gap-6">
-          <NavLink to="/">
-            <Home size={16} />
-            Home
-          </NavLink>
           <NavLink to="/dashboard">
             <ChartColumnIncreasing size={16} />
             Dashboard

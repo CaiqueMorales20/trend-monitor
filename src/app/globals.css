@@ -6,6 +6,10 @@
   @apply w-[90vw] mx-auto
 }
 
+path.recharts-curve.recharts-pie-label-line {
+  display: none !important;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

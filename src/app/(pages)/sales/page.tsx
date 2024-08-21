@@ -1,3 +1,5 @@
+import { format } from 'date-fns'
+
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
@@ -36,7 +38,9 @@ export default async function Sales() {
                   </DialogTrigger>
                 </TableCell>
                 <TableCell>R$ 190,00</TableCell>
-                <TableCell>{new Date().toISOString()}</TableCell>
+                <TableCell>
+                  {format(new Date().toISOString(), 'MM/dd/yyyy')}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

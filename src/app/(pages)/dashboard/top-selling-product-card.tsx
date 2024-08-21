@@ -14,7 +14,9 @@ function TopSellingProductCard() {
       <CardContent className="">
         <p className="text-2xl font-bold">
           40
-          <span className="text-xs text-muted-foreground">(Notebook Acer)</span>
+          <span className="ml-2 text-xs text-muted-foreground">
+            (Notebook Acer)
+          </span>
         </p>
         <p className="text-xs text-muted-foreground">
           <span className="text-green-500">+4%</span> than last month
