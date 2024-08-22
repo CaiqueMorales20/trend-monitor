@@ -17,6 +17,9 @@ const config = {
       },
     },
     extend: {
+      gridTemplateColumns: {
+        'create-sale': '1fr 100px',
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

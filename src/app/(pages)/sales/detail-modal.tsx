@@ -1,4 +1,8 @@
-import { DialogContent, DialogTitle } from '@/components/ui/dialog'
+import {
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import {
   Table,
   TableBody,
@@ -13,6 +17,9 @@ function DetailModal() {
   return (
     <DialogContent>
       <DialogTitle>Products</DialogTitle>
+      <DialogDescription className="sr-only">
+        Sale description
+      </DialogDescription>
 
       <Table>
         <TableHeader>

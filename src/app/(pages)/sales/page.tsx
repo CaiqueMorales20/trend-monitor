@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import { Plus } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -11,12 +12,24 @@ import {
   TableRow,
 } from '@/components/ui/table'
 
+import { CreateSaleModal } from './create-sale-modal'
 import { DetailModal } from './detail-modal'
 
-export default async function Sales() {
+export default function Sales() {
   return (
     <main className="container-c mt-20">
-      <h1 className="mb-12 text-3xl font-bold">Sales</h1>
+      <header className="mb-12 flex items-center justify-between">
+        <h1 className="text-3xl font-bold">Sales</h1>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button>
+              Add Sale <Plus className="ml-1" size={16} />
+            </Button>
+          </DialogTrigger>
+
+          <CreateSaleModal />
+        </Dialog>
+      </header>
 
       <Dialog>
         <Table>
