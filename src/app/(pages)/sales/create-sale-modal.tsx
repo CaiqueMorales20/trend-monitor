@@ -19,12 +19,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useCreateSale } from '@/hooks/useCreateSale'
+import { useProducts } from '@/hooks/useProducts'
 
 const createSaleSchema = z.object({
   products: z.array(
     z.object({
-      id: z.string().min(1, 'Select a product'),
-      quantity: z.number().min(1, 'Select a quantity'),
+      id: z.coerce.number().min(1, 'Select a product'),
+      quantity: z.number().min(1, 'Select a quantit'),
     }),
   ),
 })
@@ -43,7 +45,7 @@ function CreateSaleModal() {
     defaultValues: {
       products: [
         {
-          id: '',
+          id: 0,
           quantity: 0,
         },
       ],
@@ -55,6 +57,9 @@ function CreateSaleModal() {
     name: 'products',
   })
 
+  const { data: productsList } = useProducts()
+  const { createSaleFn } = useCreateSale()
+
   const products = watch('products')
 
   function addNewProduct() {
@@ -62,10 +67,10 @@ function CreateSaleModal() {
     const lastProduct = products[lastProductIndex]
     const isLastProductDirty = dirtyFields.products?.[lastProductIndex]
     const isLastProductDefault =
-      lastProduct.id === '' && lastProduct.quantity === 0
+      lastProduct.id === 0 && lastProduct.quantity === 0
 
     if (isLastProductDirty && !isLastProductDefault)
-      append({ id: '', quantity: 0 })
+      append({ id: 0, quantity: 0 })
   }
 
   function decreaseQuantity(value: number) {
@@ -75,6 +80,7 @@ function CreateSaleModal() {
 
   function handleCreateSale({ products }: CreateSaleType) {
     console.log('products', products)
+    createSaleFn({ products })
     reset()
   }
 
@@ -97,14 +103,19 @@ function CreateSaleModal() {
               render={({ field: { onChange, value } }) => (
                 <div className="space-y-1">
                   <Label>Product</Label>
-                  <Select onValueChange={onChange}>
+                  <Select onValueChange={onChange} value={String(value)}>
                     <SelectTrigger className="w-full">
-                      <SelectValue placeholder={value || 'Select a product'} />
+                      <SelectValue placeholder={'Select a product'} />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="1">Product 1</SelectItem>
-                      <SelectItem value="2">Product 2</SelectItem>
-                      <SelectItem value="3">Product 3</SelectItem>
+                      {productsList?.map((product) => (
+                        <SelectItem
+                          key={product.id}
+                          value={product.id.toString()}
+                        >
+                          {product.name}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
                   {errors?.products?.[i]?.id ? (

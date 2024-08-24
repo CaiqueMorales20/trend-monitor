@@ -1,3 +1,4 @@
+import { ISaleProduct } from '@/@types/productSale'
 import {
   DialogContent,
   DialogDescription,
@@ -12,8 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { formatCurrency } from '@/utils/format-currency'
+import { sumProductsTotal } from '@/utils/sum-products-total'
 
-function DetailModal() {
+function DetailModal({
+  saleProducts,
+}: {
+  saleProducts: ISaleProduct[] | undefined
+}) {
   return (
     <DialogContent>
       <DialogTitle>Products</DialogTitle>
@@ -32,23 +39,23 @@ function DetailModal() {
         </TableHeader>
 
         <TableBody>
-          <TableRow>
-            <TableCell>X-Tech</TableCell>
-            <TableCell>4</TableCell>
-            <TableCell>R$ 15,00</TableCell>
-            <TableCell>R$ 60,00</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>Coca</TableCell>
-            <TableCell>3</TableCell>
-            <TableCell>R$ 8,00</TableCell>
-            <TableCell>R$ 24,00</TableCell>
-          </TableRow>
+          {saleProducts?.map((saleProduct) => (
+            <TableRow key={saleProduct.id}>
+              <TableCell>{saleProduct.product.name}</TableCell>
+              <TableCell>{saleProduct.quantity}</TableCell>
+              <TableCell>{formatCurrency(saleProduct.product.price)}</TableCell>
+              <TableCell>
+                {formatCurrency(
+                  saleProduct.product.price * saleProduct.quantity,
+                )}
+              </TableCell>
+            </TableRow>
+          ))}
         </TableBody>
 
         <TableFooter>
           <TableCell colSpan={3}>Total</TableCell>
-          <TableCell>R$ 84,00</TableCell>
+          <TableCell>{sumProductsTotal(saleProducts ?? [])}</TableCell>
         </TableFooter>
       </Table>
     </DialogContent>

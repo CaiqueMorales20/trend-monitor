@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { Toaster } from '@/components/ui/sonner'
 import QueryProvider from '@/providers/query-provider'
 import { ThemeProvider } from '@/themes/theme-provider'
 
@@ -27,6 +28,8 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>{children}</QueryProvider>
+
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

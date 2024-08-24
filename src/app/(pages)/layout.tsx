@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { redirect } from 'next/navigation'
 
 import { Header } from '@/components/header'
+import { useValidateToken } from '@/hooks/useValidadeToken'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,6 +17,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const isAuth = useValidateToken()
+
+  if (!isAuth) redirect('/sign-in')
+
   return (
     <html lang="en">
       <body className={inter.className}>

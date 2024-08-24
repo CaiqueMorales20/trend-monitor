@@ -1,20 +1,16 @@
 'use client'
 
-// import { useQuery } from '@tanstack/react-query'
 import { ArrowUpRight, Blocks, ChartColumnIncreasing } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
+import { useBusiness } from '@/hooks/useBusiness'
 
-// import { getBusinessById } from '@/utils/get-business-by-id'
 import { NavLink } from './nav-link'
 import { ProfileDropdown } from './profile-dropdown'
 import { ThemeToggle } from './ui/theme-toggle'
 
 export function Header() {
-  // const { data } = useQuery({
-  //   queryKey: ['business'],
-  //   queryFn: () => getBusinessById({ id: 3 }),
-  // })
+  const { data: business } = useBusiness()
 
   return (
     <header className="border-b">
@@ -36,7 +32,7 @@ export function Header() {
 
         <div className="ml-auto flex gap-2">
           <ThemeToggle />
-          <ProfileDropdown name={'Caique Morales'} />
+          <ProfileDropdown name={business?.name} />
         </div>
       </div>
     </header>

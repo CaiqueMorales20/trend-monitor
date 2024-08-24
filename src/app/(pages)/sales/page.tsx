@@ -1,8 +1,12 @@
+'use client'
+
 import { format } from 'date-fns'
 import { Plus } from 'lucide-react'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -11,11 +15,17 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { useSales } from '@/hooks/useSales'
+import { sumProductsTotal } from '@/utils/sum-products-total'
 
 import { CreateSaleModal } from './create-sale-modal'
 import { DetailModal } from './detail-modal'
 
 export default function Sales() {
+  const { data: sales } = useSales()
+  const [currentSaleId, setCurrentSaleId] = useState(0)
+  const currentSale = sales?.find((sale) => sale.id === currentSaleId)
+
   return (
     <main className="container-c mt-20">
       <header className="mb-12 flex items-center justify-between">
@@ -42,24 +52,43 @@ export default function Sales() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {Array.from({ length: 4 }).map((_, i) => (
-              <TableRow key={i}>
-                <TableCell>1</TableCell>
-                <TableCell>
-                  <DialogTrigger asChild>
-                    <Button>See detail</Button>
-                  </DialogTrigger>
-                </TableCell>
-                <TableCell>R$ 190,00</TableCell>
-                <TableCell>
-                  {format(new Date().toISOString(), 'MM/dd/yyyy')}
-                </TableCell>
-              </TableRow>
-            ))}
+            {sales
+              ? sales?.map((sale, i) => (
+                  <TableRow key={i}>
+                    <TableCell>{sale.id}</TableCell>
+                    <TableCell>
+                      <DialogTrigger asChild>
+                        <Button onClick={() => setCurrentSaleId(sale.id)}>
+                          See detail
+                        </Button>
+                      </DialogTrigger>
+                    </TableCell>
+                    <TableCell>{sumProductsTotal(sale.products)}</TableCell>
+                    <TableCell>
+                      {format(new Date(sale.saleDate), 'MM/dd/yyyy')}
+                    </TableCell>
+                  </TableRow>
+                ))
+              : Array.from({ length: 8 }).map((_, i) => (
+                  <TableRow key={i}>
+                    <TableCell>
+                      <Skeleton className="h-8" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-8" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-8" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-8" />
+                    </TableCell>
+                  </TableRow>
+                ))}
           </TableBody>
         </Table>
 
-        <DetailModal />
+        <DetailModal saleProducts={currentSale?.products} />
       </Dialog>
     </main>
   )
