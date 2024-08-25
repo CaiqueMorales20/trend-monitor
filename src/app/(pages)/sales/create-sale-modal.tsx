@@ -33,7 +33,7 @@ const createSaleSchema = z.object({
 
 type CreateSaleType = z.infer<typeof createSaleSchema>
 
-function CreateSaleModal() {
+function CreateSaleModal({ handleModal }: { handleModal: () => void }) {
   const {
     control,
     handleSubmit,
@@ -82,6 +82,7 @@ function CreateSaleModal() {
     console.log('products', products)
     createSaleFn({ products })
     reset()
+    handleModal()
   }
 
   return (

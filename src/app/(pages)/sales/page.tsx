@@ -26,18 +26,24 @@ export default function Sales() {
   const [currentSaleId, setCurrentSaleId] = useState(0)
   const currentSale = sales?.find((sale) => sale.id === currentSaleId)
 
+  const [createSaleModalOpened, setCreateSaleModalOpened] = useState(false)
+
+  function handleSaleModal() {
+    setCreateSaleModalOpened(!createSaleModalOpened)
+  }
+
   return (
     <main className="container-c mt-20">
       <header className="mb-12 flex items-center justify-between">
         <h1 className="text-3xl font-bold">Sales</h1>
-        <Dialog>
+        <Dialog open={createSaleModalOpened} onOpenChange={handleSaleModal}>
           <DialogTrigger asChild>
-            <Button>
+            <Button onClick={() => handleSaleModal()}>
               Add Sale <Plus className="ml-1" size={16} />
             </Button>
           </DialogTrigger>
 
-          <CreateSaleModal />
+          <CreateSaleModal handleModal={handleSaleModal} />
         </Dialog>
       </header>
 
