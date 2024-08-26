@@ -4,12 +4,12 @@ import { IProduct } from '@/@types/product'
 import { getProducts } from '@/utils/get-product'
 
 function useProducts() {
-  const { data } = useQuery({
+  const { data: products } = useQuery({
     queryKey: ['products'],
     queryFn: getProducts,
   })
 
-  return { data } as { data: IProduct[] }
+  return { products } as { products: IProduct[] }
 }
 
 export { useProducts }

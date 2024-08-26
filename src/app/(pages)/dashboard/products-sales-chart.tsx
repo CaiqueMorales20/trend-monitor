@@ -10,6 +10,8 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from '@/components/ui/chart'
+import { Skeleton } from '@/components/ui/skeleton'
+import { useMostSoldProducts } from '@/hooks/useMostSoldProducts'
 
 const COLORS = [
   colors.blue['500'],
@@ -19,16 +21,11 @@ const COLORS = [
   colors.fuchsia['500'],
 ]
 
-const data = [
-  { name: 'X-Tech', quantity: 80 },
-  { name: 'X-Salada', quantity: 60 },
-  { name: 'X-Tudo', quantity: 20 },
-  { name: 'X-Burger', quantity: 40 },
-]
-
 const chartConfig = {}
 
 function ProductSalesChart() {
+  const { mostSoldProducts } = useMostSoldProducts()
+
   return (
     <Card>
       <CardHeader className="mb-6">
@@ -37,29 +34,45 @@ function ProductSalesChart() {
         </CardTitle>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig}>
-          <PieChart>
-            <ChartTooltip content={<ChartTooltipContent />} />
-            <Pie
-              dataKey="quantity"
-              data={data}
-              cx={'50%'}
-              cy={'50%'}
-              innerRadius={100}
-              outerRadius={160}
-              strokeWidth={16}
-              label={(props) => <CustomPieLabel {...props} data={data} />}
-            >
-              {data.map((_, i) => (
-                <Cell
-                  key={`Cell-${i}`}
-                  fill={COLORS[i]}
-                  className="stroke-card"
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        </ChartContainer>
+        {!mostSoldProducts ? (
+          <Skeleton className="m-auto h-80 w-80 rounded-full" />
+        ) : (
+          ''
+        )}
+        {mostSoldProducts && mostSoldProducts.length ? (
+          <ChartContainer config={chartConfig}>
+            <PieChart>
+              <ChartTooltip content={<ChartTooltipContent />} />
+              <Pie
+                dataKey="totalQuantitySold"
+                data={mostSoldProducts}
+                cx={'50%'}
+                cy={'50%'}
+                innerRadius={80}
+                outerRadius={140}
+                strokeWidth={16}
+                label={(props) => (
+                  <CustomPieLabel {...props} data={mostSoldProducts} />
+                )}
+              >
+                {mostSoldProducts.map((_, i) => (
+                  <Cell
+                    key={`Cell-${i}`}
+                    fill={COLORS[i]}
+                    className="stroke-card"
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ChartContainer>
+        ) : (
+          ''
+        )}
+        {mostSoldProducts && mostSoldProducts.length === 0 ? (
+          <p className="text-foreground/60">No sales yet.</p>
+        ) : (
+          ''
+        )}
       </CardContent>
     </Card>
   )

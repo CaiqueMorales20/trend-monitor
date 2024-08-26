@@ -1,3 +1,5 @@
+import { ICategory } from './category'
+
 interface IProduct {
   businessId: number
   categoryId: number
@@ -5,6 +7,8 @@ interface IProduct {
   name: string
   price: number
   quantity: number
+  category?: ICategory
+  totalQuantitySold?: number
 }
 
 export type { IProduct }

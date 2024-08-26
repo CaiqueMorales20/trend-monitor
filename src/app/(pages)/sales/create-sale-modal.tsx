@@ -57,7 +57,7 @@ function CreateSaleModal({ handleModal }: { handleModal: () => void }) {
     name: 'products',
   })
 
-  const { data: productsList } = useProducts()
+  const { products: productsList } = useProducts()
   const { createSaleFn } = useCreateSale()
 
   const products = watch('products')
@@ -92,92 +92,98 @@ function CreateSaleModal({ handleModal }: { handleModal: () => void }) {
         Modal for creating a sale
       </DialogDescription>
 
-      <form
-        onSubmit={handleSubmit(handleCreateSale)}
-        className="flex flex-col gap-4"
-      >
-        {fields.map((field, i) => (
-          <div key={i} className="grid grid-cols-create-sale gap-4">
-            <Controller
-              control={control}
-              name={`products.${i}.id`}
-              render={({ field: { onChange, value } }) => (
-                <div className="space-y-1">
-                  <Label>Product</Label>
-                  <Select onValueChange={onChange} value={String(value)}>
-                    <SelectTrigger className="w-full">
-                      <SelectValue placeholder={'Select a product'} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {productsList?.map((product) => (
-                        <SelectItem
-                          key={product.id}
-                          value={product.id.toString()}
-                        >
-                          {product.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  {errors?.products?.[i]?.id ? (
-                    <p className="text-xs text-red-500">
-                      {errors.products[i].id.message}
-                    </p>
-                  ) : (
-                    ''
-                  )}
-                </div>
-              )}
-            />
-
-            <Controller
-              control={control}
-              name={`products.${i}.quantity`}
-              render={({ field: { onChange, value } }) => (
-                <div className="space-y-1">
-                  <Label>Quantity</Label>
-                  <div className="flex h-10 w-full items-center justify-center gap-2 rounded-md border border-input bg-background px-3 py-2">
-                    <button
-                      type="button"
-                      onClick={() => onChange(decreaseQuantity(value))}
-                      className="p-2"
-                    >
-                      <Minus size={18} />
-                    </button>
-                    <span>{JSON.stringify(value)}</span>
-                    <button
-                      type="button"
-                      onClick={() => onChange(value + 1)}
-                      className="p-2"
-                    >
-                      <Plus size={18} />
-                    </button>
-                  </div>
-                  {errors?.products?.[i]?.quantity ? (
-                    <p className="text-xs text-red-500">
-                      {errors.products[i].quantity.message}
-                    </p>
-                  ) : (
-                    ''
-                  )}
-                </div>
-              )}
-            />
-          </div>
-        ))}
-
-        <button
-          type="button"
-          onClick={() => addNewProduct()}
-          className="mb-10 mt-4 flex w-max items-center gap-2 text-sm font-bold"
+      {productsList && productsList.length ? (
+        <form
+          onSubmit={handleSubmit(handleCreateSale)}
+          className="flex flex-col gap-4"
         >
-          new product <Plus size={10} className="text-foreground" />
-        </button>
+          {fields.map((field, i) => (
+            <div key={i} className="grid grid-cols-create-sale gap-4">
+              <Controller
+                control={control}
+                name={`products.${i}.id`}
+                render={({ field: { onChange, value } }) => (
+                  <div className="space-y-1">
+                    <Label>Product</Label>
+                    <Select onValueChange={onChange} value={String(value)}>
+                      <SelectTrigger className="w-full">
+                        <SelectValue placeholder={'Select a product'} />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {productsList?.map((product) => (
+                          <SelectItem
+                            key={product.id}
+                            value={product.id.toString()}
+                          >
+                            {product.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors?.products?.[i]?.id ? (
+                      <p className="text-xs text-red-500">
+                        {errors.products[i].id.message}
+                      </p>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                )}
+              />
 
-        <Button type="submit" className="w-max">
-          Create sale
-        </Button>
-      </form>
+              <Controller
+                control={control}
+                name={`products.${i}.quantity`}
+                render={({ field: { onChange, value } }) => (
+                  <div className="space-y-1">
+                    <Label>Quantity</Label>
+                    <div className="flex h-10 w-full items-center justify-center gap-2 rounded-md border border-input bg-background px-3 py-2">
+                      <button
+                        type="button"
+                        onClick={() => onChange(decreaseQuantity(value))}
+                        className="p-2"
+                      >
+                        <Minus size={18} />
+                      </button>
+                      <span>{JSON.stringify(value)}</span>
+                      <button
+                        type="button"
+                        onClick={() => onChange(value + 1)}
+                        className="p-2"
+                      >
+                        <Plus size={18} />
+                      </button>
+                    </div>
+                    {errors?.products?.[i]?.quantity ? (
+                      <p className="text-xs text-red-500">
+                        {errors.products[i].quantity.message}
+                      </p>
+                    ) : (
+                      ''
+                    )}
+                  </div>
+                )}
+              />
+            </div>
+          ))}
+
+          <button
+            type="button"
+            onClick={() => addNewProduct()}
+            className="mb-10 mt-4 flex w-max items-center gap-2 text-sm font-bold"
+          >
+            new product <Plus size={10} className="text-foreground" />
+          </button>
+
+          <Button type="submit" className="w-max">
+            Create sale
+          </Button>
+        </form>
+      ) : (
+        <p className="text-foreground/60">
+          No product yet. Please create a product before creating a sale
+        </p>
+      )}
     </DialogContent>
   )
 }

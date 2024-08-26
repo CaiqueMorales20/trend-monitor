@@ -22,7 +22,7 @@ import { CreateSaleModal } from './create-sale-modal'
 import { DetailModal } from './detail-modal'
 
 export default function Sales() {
-  const { data: sales } = useSales()
+  const { sales } = useSales()
   const [currentSaleId, setCurrentSaleId] = useState(0)
   const currentSale = sales?.find((sale) => sale.id === currentSaleId)
 
@@ -48,51 +48,55 @@ export default function Sales() {
       </header>
 
       <Dialog>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-40">ID</TableHead>
-              <TableHead className="w-80">Products</TableHead>
-              <TableHead className="w-80">Total</TableHead>
-              <TableHead>Date</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {sales
-              ? sales?.map((sale, i) => (
-                  <TableRow key={i}>
-                    <TableCell>{sale.id}</TableCell>
-                    <TableCell>
-                      <DialogTrigger asChild>
-                        <Button onClick={() => setCurrentSaleId(sale.id)}>
-                          See detail
-                        </Button>
-                      </DialogTrigger>
-                    </TableCell>
-                    <TableCell>{sumProductsTotal(sale.products)}</TableCell>
-                    <TableCell>
-                      {format(new Date(sale.saleDate), 'MM/dd/yyyy')}
-                    </TableCell>
-                  </TableRow>
-                ))
-              : Array.from({ length: 8 }).map((_, i) => (
-                  <TableRow key={i}>
-                    <TableCell>
-                      <Skeleton className="h-8" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton className="h-8" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton className="h-8" />
-                    </TableCell>
-                    <TableCell>
-                      <Skeleton className="h-8" />
-                    </TableCell>
-                  </TableRow>
-                ))}
-          </TableBody>
-        </Table>
+        {sales && sales.length ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-40">ID</TableHead>
+                <TableHead className="w-80">Products</TableHead>
+                <TableHead className="w-80">Total</TableHead>
+                <TableHead>Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {sales
+                ? sales?.map((sale, i) => (
+                    <TableRow key={i}>
+                      <TableCell>{sale.id}</TableCell>
+                      <TableCell>
+                        <DialogTrigger asChild>
+                          <Button onClick={() => setCurrentSaleId(sale.id)}>
+                            See detail
+                          </Button>
+                        </DialogTrigger>
+                      </TableCell>
+                      <TableCell>{sumProductsTotal(sale.products)}</TableCell>
+                      <TableCell>
+                        {format(new Date(sale.saleDate), 'MM/dd/yyyy')}
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : Array.from({ length: 8 }).map((_, i) => (
+                    <TableRow key={i}>
+                      <TableCell>
+                        <Skeleton className="h-8" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-8" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-8" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-8" />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        ) : (
+          <p className="text-foreground/60">No sales yet.</p>
+        )}
 
         <DetailModal saleProducts={currentSale?.products} />
       </Dialog>
