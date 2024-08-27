@@ -1,6 +1,11 @@
 'use client'
 
-import { ArrowUpRight, Blocks, ChartColumnIncreasing } from 'lucide-react'
+import {
+  ArrowUpRight,
+  Blocks,
+  ChartColumnIncreasing,
+  Package,
+} from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
 import { useBusiness } from '@/hooks/useBusiness'
@@ -10,7 +15,7 @@ import { ProfileDropdown } from './profile-dropdown'
 import { ThemeToggle } from './ui/theme-toggle'
 
 export function Header() {
-  const { data: business } = useBusiness()
+  const { business } = useBusiness()
 
   return (
     <header className="border-b">
@@ -27,6 +32,10 @@ export function Header() {
           <NavLink to="/sales">
             <ArrowUpRight size={16} />
             Sales
+          </NavLink>
+          <NavLink to="/products">
+            <Package size={16} />
+            Products
           </NavLink>
         </nav>
 

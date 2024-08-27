@@ -4,9 +4,9 @@ import { format } from 'date-fns'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 
+import { TableContentSkeleton } from '@/components/table-content-skeleton'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
-import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
   TableBody,
@@ -59,43 +59,50 @@ export default function Sales() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sales
-                ? sales?.map((sale, i) => (
-                    <TableRow key={i}>
-                      <TableCell>{sale.id}</TableCell>
-                      <TableCell>
-                        <DialogTrigger asChild>
-                          <Button onClick={() => setCurrentSaleId(sale.id)}>
-                            See detail
-                          </Button>
-                        </DialogTrigger>
-                      </TableCell>
-                      <TableCell>{sumProductsTotal(sale.products)}</TableCell>
-                      <TableCell>
-                        {format(new Date(sale.saleDate), 'MM/dd/yyyy')}
-                      </TableCell>
-                    </TableRow>
-                  ))
-                : Array.from({ length: 8 }).map((_, i) => (
-                    <TableRow key={i}>
-                      <TableCell>
-                        <Skeleton className="h-8" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-8" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-8" />
-                      </TableCell>
-                      <TableCell>
-                        <Skeleton className="h-8" />
-                      </TableCell>
-                    </TableRow>
-                  ))}
+              {sales.map((sale, i) => (
+                <TableRow key={i}>
+                  <TableCell>{sale.id}</TableCell>
+                  <TableCell>
+                    <DialogTrigger asChild>
+                      <Button onClick={() => setCurrentSaleId(sale.id)}>
+                        See detail
+                      </Button>
+                    </DialogTrigger>
+                  </TableCell>
+                  <TableCell>{sumProductsTotal(sale.products)}</TableCell>
+                  <TableCell>
+                    {format(new Date(sale.saleDate), 'MM/dd/yyyy')}
+                  </TableCell>
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
         ) : (
+          ''
+        )}
+
+        {sales && sales.length ? (
           <p className="text-foreground/60">No sales yet.</p>
+        ) : (
+          ''
+        )}
+
+        {!sales ? (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-40">ID</TableHead>
+                <TableHead className="w-80">Products</TableHead>
+                <TableHead className="w-80">Total</TableHead>
+                <TableHead>Date</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              <TableContentSkeleton />
+            </TableBody>
+          </Table>
+        ) : (
+          ''
         )}
 
         <DetailModal saleProducts={currentSale?.products} />

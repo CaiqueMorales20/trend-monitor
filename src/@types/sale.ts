@@ -1,4 +1,4 @@
-import { ISaleProduct } from './productSale'
+import { ISaleProduct } from './product-sale'
 
 interface ISale {
   id: number

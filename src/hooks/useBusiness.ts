@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { IBusiness } from '@/@types/business'
 import { getCurrentBusiness } from '@/utils/get-current-business'
 
 function useBusiness() {
-  const { data } = useQuery({
+  const { data: business } = useQuery({
     queryKey: ['business'],
     queryFn: getCurrentBusiness,
   })
 
-  return { data }
+  return { business } as { business: IBusiness }
 }
 
 export { useBusiness }
