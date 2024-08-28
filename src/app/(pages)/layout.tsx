@@ -3,7 +3,8 @@ import { Inter } from 'next/font/google'
 import { redirect } from 'next/navigation'
 
 import { Header } from '@/components/header'
-import { useValidateToken } from '@/hooks/useValidadeToken'
+import { Toaster } from '@/components/ui/sonner'
+import { useValidateToken } from '@/hooks/use-validade-token'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Header />
         {children}
+        <Toaster />
       </body>
     </html>
   )

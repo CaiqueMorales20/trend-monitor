@@ -8,7 +8,7 @@ import {
 } from 'lucide-react'
 
 import { Separator } from '@/components/ui/separator'
-import { useBusiness } from '@/hooks/useBusiness'
+import { useBusiness } from '@/hooks/use-business'
 
 import { NavLink } from './nav-link'
 import { ProfileDropdown } from './profile-dropdown'

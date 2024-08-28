@@ -2,7 +2,7 @@ import { DollarSign } from 'lucide-react'
 
 import { CardContentSkeleton } from '@/components/card-content-skeleton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useSales } from '@/hooks/useSales'
+import { useSales } from '@/hooks/use-sales'
 
 function MonthSalesCard() {
   const { sales } = useSales()

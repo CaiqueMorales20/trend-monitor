@@ -15,7 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useSales } from '@/hooks/useSales'
+import { useSales } from '@/hooks/use-sales'
 import { sumProductsTotal } from '@/utils/sum-products-total'
 
 import { CreateSaleModal } from './create-sale-modal'

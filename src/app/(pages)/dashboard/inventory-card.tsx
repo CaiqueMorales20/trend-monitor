@@ -2,7 +2,7 @@ import { Box } from 'lucide-react'
 
 import { CardContentSkeleton } from '@/components/card-content-skeleton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useProducts } from '@/hooks/useProducts'
+import { useProducts } from '@/hooks/use-products'
 import { calculateInventoryItems } from '@/utils/calculate-inventory-items'
 
 function InventoryCard() {

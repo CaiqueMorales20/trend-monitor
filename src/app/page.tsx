@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation'
 
-import { useValidateToken } from '@/hooks/useValidadeToken'
+import { useValidateToken } from '@/hooks/use-validade-token'
 
 export default async function Home() {
   const isAuth = useValidateToken()

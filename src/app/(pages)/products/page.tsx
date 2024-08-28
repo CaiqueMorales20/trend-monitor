@@ -1,6 +1,5 @@
 'use client'
 
-import { format } from 'date-fns'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 
@@ -14,12 +13,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useSales } from '@/hooks/useSales'
+import { useDeleteProduct } from '@/hooks/use-delete-product'
+import { useProducts } from '@/hooks/use-products'
 
 import { CreateProductModal } from './create-product-modal'
 
 export default function Products() {
-  const { sales } = useSales()
+  const { products } = useProducts()
+  const { deleteProductFn } = useDeleteProduct()
 
   const [createSaleModalOpened, setCreateSaleModalOpened] = useState(false)
 
@@ -42,32 +43,42 @@ export default function Products() {
         </Dialog>
       </header>
 
-      {sales && sales.length ? (
+      {products && products.length ? (
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead className="w-20">ID</TableHead>
-              <TableHead className="w-60">Name</TableHead>
+              <TableHead className="w-40">Name</TableHead>
+              <TableHead className="w-40">Category</TableHead>
               <TableHead className="w-40">Stock Quantity</TableHead>
-              <TableHead className="w-60">Created Date</TableHead>
-              <TableHead className="w-20"></TableHead>
+              {/* <TableHead className="w-20"></TableHead> */}
               <TableHead className="w-20"></TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {sales.map((sale, i) => (
+            {products.map((product, i) => (
               <TableRow key={i}>
-                <TableCell>{sale.id}</TableCell>
-                <TableCell>Comida</TableCell>
-                <TableCell>20</TableCell>
-                <TableCell>
-                  {format(new Date(sale.saleDate), 'MM/dd/yyyy')}
+                <TableCell>{product.id}</TableCell>
+                <TableCell>{product.name}</TableCell>
+                <TableCell className="capitalize">
+                  {product.category?.name}
                 </TableCell>
+                <TableCell>{product.quantity}</TableCell>
+                {/* <TableCell>
+                  <Button
+                    onClick={() => toast('Product updated')}
+                    variant={'secondary'}
+                  >
+                    Update
+                  </Button>
+                </TableCell> */}
                 <TableCell>
-                  <Button variant={'secondary'}>Update</Button>
-                </TableCell>
-                <TableCell>
-                  <Button variant={'destructive'}>Delete</Button>
+                  <Button
+                    onClick={() => deleteProductFn({ id: product.id })}
+                    variant={'destructive'}
+                  >
+                    Delete
+                  </Button>
                 </TableCell>
               </TableRow>
             ))}

@@ -19,8 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { useCreateSale } from '@/hooks/useCreateSale'
-import { useProducts } from '@/hooks/useProducts'
+import { useCreateSale } from '@/hooks/use-create-sale'
+import { useProducts } from '@/hooks/use-products'
 
 const createSaleSchema = z.object({
   products: z.array(

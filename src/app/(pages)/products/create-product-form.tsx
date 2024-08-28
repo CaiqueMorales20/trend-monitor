@@ -6,8 +6,8 @@ import { QuantityInput } from '@/components/quantity-input'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import { useCategories } from '@/hooks/useCategories'
-import { useProductForm } from '@/hooks/useProductForm'
+import { useCategories } from '@/hooks/use-categories'
+import { useProductForm } from '@/hooks/use-product-form'
 
 function CreateProductForm() {
   const { categories } = useCategories()

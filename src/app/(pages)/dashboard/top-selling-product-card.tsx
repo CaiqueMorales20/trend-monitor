@@ -4,7 +4,7 @@ import { Rocket } from 'lucide-react'
 
 import { CardContentSkeleton } from '@/components/card-content-skeleton'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { useMostSoldProducts } from '@/hooks/useMostSoldProducts'
+import { useMostSoldProducts } from '@/hooks/use-most-sold-products'
 
 function TopSellingProductCard() {
   const { mostSoldProducts } = useMostSoldProducts()

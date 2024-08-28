@@ -11,7 +11,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useMostSoldProducts } from '@/hooks/useMostSoldProducts'
+import { useMostSoldProducts } from '@/hooks/use-most-sold-products'
 
 const COLORS = [
   colors.blue['500'],

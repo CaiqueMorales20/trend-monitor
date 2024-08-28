@@ -11,7 +11,7 @@ import {
   ChartTooltipContent,
 } from '@/components/ui/chart'
 import { Skeleton } from '@/components/ui/skeleton'
-import { useSales } from '@/hooks/useSales'
+import { useSales } from '@/hooks/use-sales'
 import { groupSalesByMonth } from '@/utils/grou-sales-by-month'
 
 const chartConfig = {

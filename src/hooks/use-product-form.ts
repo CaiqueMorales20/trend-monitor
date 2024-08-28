@@ -2,6 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { useCreateProduct } from './use-create-product'
+
 const productFormSchema = z.object({
   name: z.string().min(1, 'Insert a name'),
   quantity: z.coerce.number().min(1, 'Select a quantity'),
@@ -27,8 +29,16 @@ function useProductForm() {
     },
   })
 
-  function handleCreateNewProduct(data: ProductFormType) {
-    console.log(data)
+  const { createProductFn } = useCreateProduct()
+
+  function handleCreateNewProduct({
+    name,
+    categoryId,
+    price,
+    quantity,
+  }: ProductFormType) {
+    createProductFn({ name, categoryId, quantity, price })
+    reset()
   }
 
   return {
