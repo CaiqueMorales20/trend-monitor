@@ -1,4 +1,4 @@
-import { ISaleProduct } from '@/@types/productSale'
+import { ISaleProduct } from '@/@types/product-sale'
 
 import { formatCurrency } from './format-currency'
 
