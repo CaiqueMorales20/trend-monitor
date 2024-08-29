@@ -111,7 +111,7 @@ export default function Sales() {
         <DetailModal saleProducts={currentSale?.products} />
       </Dialog>
 
-      {sales ? (
+      {sales && sales.length ? (
         <Pagination
           onPaginate={handlePaginate}
           currentQuantity={sales.length}

@@ -94,7 +94,7 @@ export default function Products() {
         <p className="text-foreground/60">No products yet.</p>
       )}
 
-      {products ? (
+      {products && products.length ? (
         <Pagination
           onPaginate={handlePaginate}
           currentQuantity={products.length}
