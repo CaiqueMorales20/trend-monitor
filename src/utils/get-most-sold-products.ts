@@ -12,8 +12,6 @@ async function getMostSoldProducts() {
     },
   })
 
-  console.log('dataa', data)
-
   return data as IProduct[]
 }
 

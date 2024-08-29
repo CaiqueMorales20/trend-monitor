@@ -22,7 +22,7 @@ const chartConfig = {
 } satisfies ChartConfig
 
 function SalesChart() {
-  const { sales } = useSales()
+  const { sales } = useSales({ page: 1, limit: 100 })
 
   const salesByMonth = groupSalesByMonth(sales)
 

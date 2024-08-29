@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useSales } from '@/hooks/use-sales'
 
 function MonthSalesCard() {
-  const { sales } = useSales()
+  const { sales } = useSales({ page: 1, limit: 100 })
 
   const today = new Date()
   const oneMonthAgo = new Date(today)

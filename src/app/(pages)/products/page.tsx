@@ -3,6 +3,7 @@
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 
+import { Pagination } from '@/components/pagination'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
 import {
@@ -14,12 +15,17 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useDeleteProduct } from '@/hooks/use-delete-product'
+import { usePaginate } from '@/hooks/use-paginate'
 import { useProducts } from '@/hooks/use-products'
 
 import { CreateProductModal } from './create-product-modal'
 
 export default function Products() {
-  const { products } = useProducts()
+  const { handlePaginate, PAGE_LIMIT, PAGE } = usePaginate()
+  const { products, totalCount } = useProducts({
+    limit: PAGE_LIMIT,
+    page: PAGE,
+  })
   const { deleteProductFn } = useDeleteProduct()
 
   const [createSaleModalOpened, setCreateSaleModalOpened] = useState(false)
@@ -85,7 +91,19 @@ export default function Products() {
           </TableBody>
         </Table>
       ) : (
-        <p className="text-foreground/60">No sales yet.</p>
+        <p className="text-foreground/60">No products yet.</p>
+      )}
+
+      {products ? (
+        <Pagination
+          onPaginate={handlePaginate}
+          currentQuantity={products.length}
+          limit={PAGE_LIMIT}
+          page={PAGE}
+          totalCount={totalCount}
+        />
+      ) : (
+        ''
       )}
     </main>
   )

@@ -6,7 +6,7 @@ import { useProducts } from '@/hooks/use-products'
 import { calculateInventoryItems } from '@/utils/calculate-inventory-items'
 
 function InventoryCard() {
-  const { products } = useProducts()
+  const { products } = useProducts({ page: 1, limit: 1000 })
 
   return (
     <Card>

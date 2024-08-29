@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 
+import { Pagination } from '@/components/pagination'
 import { TableContentSkeleton } from '@/components/table-content-skeleton'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
@@ -15,6 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { usePaginate } from '@/hooks/use-paginate'
 import { useSales } from '@/hooks/use-sales'
 import { sumProductsTotal } from '@/utils/sum-products-total'
 
@@ -22,7 +24,8 @@ import { CreateSaleModal } from './create-sale-modal'
 import { DetailModal } from './detail-modal'
 
 export default function Sales() {
-  const { sales } = useSales()
+  const { handlePaginate, PAGE_LIMIT, PAGE } = usePaginate()
+  const { sales, totalCount } = useSales({ limit: PAGE_LIMIT, page: PAGE })
   const [currentSaleId, setCurrentSaleId] = useState(0)
   const currentSale = sales?.find((sale) => sale.id === currentSaleId)
 
@@ -81,7 +84,7 @@ export default function Sales() {
           ''
         )}
 
-        {sales && sales.length ? (
+        {sales && sales.length < 1 ? (
           <p className="text-foreground/60">No sales yet.</p>
         ) : (
           ''
@@ -107,6 +110,18 @@ export default function Sales() {
 
         <DetailModal saleProducts={currentSale?.products} />
       </Dialog>
+
+      {sales ? (
+        <Pagination
+          onPaginate={handlePaginate}
+          currentQuantity={sales.length}
+          limit={PAGE_LIMIT}
+          page={PAGE}
+          totalCount={totalCount}
+        />
+      ) : (
+        ''
+      )}
     </main>
   )
 }

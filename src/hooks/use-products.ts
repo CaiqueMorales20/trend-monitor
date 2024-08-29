@@ -3,13 +3,16 @@ import { useQuery } from '@tanstack/react-query'
 import { IProduct } from '@/@types/product'
 import { getProducts } from '@/utils/get-product'
 
-function useProducts() {
-  const { data: products } = useQuery({
-    queryKey: ['products'],
-    queryFn: getProducts,
+function useProducts({ limit, page }: { page: number; limit: number }) {
+  const { data } = useQuery({
+    queryKey: ['products', page],
+    queryFn: () => getProducts({ limit, page }),
   })
 
-  return { products } as { products: IProduct[] }
+  return { products: data?.products, totalCount: data?.totalCount } as {
+    products: IProduct[]
+    totalCount: number
+  }
 }
 
 export { useProducts }

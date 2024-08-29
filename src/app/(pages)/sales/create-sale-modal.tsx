@@ -57,7 +57,7 @@ function CreateSaleModal({ handleModal }: { handleModal: () => void }) {
     name: 'products',
   })
 
-  const { products: productsList } = useProducts()
+  const { products: productsList } = useProducts({ page: 1, limit: 1000 })
   const { createSaleFn } = useCreateSale()
 
   const products = watch('products')
@@ -79,7 +79,6 @@ function CreateSaleModal({ handleModal }: { handleModal: () => void }) {
   }
 
   function handleCreateSale({ products }: CreateSaleType) {
-    console.log('products', products)
     createSaleFn({ products })
     reset()
     handleModal()
