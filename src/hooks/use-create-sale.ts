@@ -17,13 +17,13 @@ function useCreateSale() {
       const cached = queryClient.getQueryData<{
         sales: ISale[]
         totalCount: number
-      }>(['sales', Number(searchParams.get('page'))])
+      }>(['sales', Number(searchParams.get('page') ?? 1)])
 
       if (cached) {
         queryClient.setQueryData<{
           sales: ISale[]
           totalCount: number
-        }>(['sales', Number(searchParams.get('page'))], {
+        }>(['sales', Number(searchParams.get('page') ?? 1)], {
           sales: [...cached.sales, sale],
           totalCount: cached.totalCount + 1,
         })

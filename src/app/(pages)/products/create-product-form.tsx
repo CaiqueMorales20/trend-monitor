@@ -9,10 +9,10 @@ import { Label } from '@/components/ui/label'
 import { useCategories } from '@/hooks/use-categories'
 import { useProductForm } from '@/hooks/use-product-form'
 
-function CreateProductForm() {
+function CreateProductForm({ handleModal }: { handleModal: () => void }) {
   const { categories } = useCategories()
   const { register, handleSubmit, handleCreateNewProduct, control, errors } =
-    useProductForm()
+    useProductForm({ handleModal })
 
   return (
     <form

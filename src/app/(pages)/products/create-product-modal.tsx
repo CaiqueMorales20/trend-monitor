@@ -6,7 +6,7 @@ import {
 
 import { CreateProductForm } from './create-product-form'
 
-function CreateProductModal() {
+function CreateProductModal({ handleModal }: { handleModal: () => void }) {
   return (
     <DialogContent>
       <DialogTitle>Create a product</DialogTitle>
@@ -14,7 +14,7 @@ function CreateProductModal() {
         Modal for creating a product
       </DialogDescription>
 
-      <CreateProductForm />
+      <CreateProductForm handleModal={handleModal} />
     </DialogContent>
   )
 }

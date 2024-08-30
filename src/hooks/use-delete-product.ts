@@ -16,7 +16,7 @@ function useDeleteProduct() {
       const cached = queryClient.getQueryData<{
         products: IProduct[]
         totalCount: number
-      }>(['products', Number(searchParams.get('page'))])
+      }>(['products', Number(searchParams.get('page') ?? 1)])
 
       console.log(cached)
 

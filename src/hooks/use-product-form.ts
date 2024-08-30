@@ -13,7 +13,7 @@ const productFormSchema = z.object({
 
 type ProductFormType = z.infer<typeof productFormSchema>
 
-function useProductForm() {
+function useProductForm({ handleModal }: { handleModal: () => void }) {
   const {
     register,
     handleSubmit,
@@ -38,6 +38,7 @@ function useProductForm() {
     quantity,
   }: ProductFormType) {
     createProductFn({ name, categoryId, quantity, price })
+    handleModal()
     reset()
   }
 

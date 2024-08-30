@@ -28,24 +28,28 @@ export default function Products() {
   })
   const { deleteProductFn } = useDeleteProduct()
 
-  const [createSaleModalOpened, setCreateSaleModalOpened] = useState(false)
+  const [createProductModalOpened, setCreateProductModalOpened] =
+    useState(false)
 
-  function handleSaleModal() {
-    setCreateSaleModalOpened(!createSaleModalOpened)
+  function handleProductModal() {
+    setCreateProductModalOpened(!createProductModalOpened)
   }
 
   return (
     <main className="container-c mt-20">
       <header className="mb-12 flex items-center justify-between">
         <h1 className="text-3xl font-bold">Products</h1>
-        <Dialog open={createSaleModalOpened} onOpenChange={handleSaleModal}>
+        <Dialog
+          open={createProductModalOpened}
+          onOpenChange={handleProductModal}
+        >
           <DialogTrigger asChild>
-            <Button onClick={() => handleSaleModal()}>
+            <Button onClick={() => handleProductModal()}>
               Add Product <Plus className="ml-1" size={16} />
             </Button>
           </DialogTrigger>
 
-          <CreateProductModal />
+          <CreateProductModal handleModal={() => handleProductModal()} />
         </Dialog>
       </header>
 
