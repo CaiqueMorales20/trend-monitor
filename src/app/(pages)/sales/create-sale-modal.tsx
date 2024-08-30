@@ -1,10 +1,11 @@
 'use client'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Minus, Plus } from 'lucide-react'
+import { Plus } from 'lucide-react'
 import { Controller, useFieldArray, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { FormError } from '@/components/form-error'
 import { Button } from '@/components/ui/button'
 import {
   DialogContent,
@@ -22,6 +23,8 @@ import {
 import { useCreateSale } from '@/hooks/use-create-sale'
 import { useProducts } from '@/hooks/use-products'
 
+import { ProductQuantityController } from './product-quantity-controller'
+
 const createSaleSchema = z.object({
   products: z.array(
     z.object({
@@ -31,7 +34,7 @@ const createSaleSchema = z.object({
   ),
 })
 
-type CreateSaleType = z.infer<typeof createSaleSchema>
+export type CreateSaleType = z.infer<typeof createSaleSchema>
 
 function CreateSaleModal({ handleModal }: { handleModal: () => void }) {
   const {
@@ -73,11 +76,6 @@ function CreateSaleModal({ handleModal }: { handleModal: () => void }) {
       append({ id: 0, quantity: 0 })
   }
 
-  function decreaseQuantity(value: number) {
-    if (value === 0) return
-    return value - 1
-  }
-
   function handleCreateSale({ products }: CreateSaleType) {
     createSaleFn({ products })
     reset()
@@ -109,59 +107,36 @@ function CreateSaleModal({ handleModal }: { handleModal: () => void }) {
                         <SelectValue placeholder={'Select a product'} />
                       </SelectTrigger>
                       <SelectContent>
-                        {productsList?.map((product) => (
-                          <SelectItem
-                            key={product.id}
-                            value={product.id.toString()}
-                          >
-                            {product.name}
-                          </SelectItem>
-                        ))}
+                        {productsList?.map((product) => {
+                          const isDisabled = products.some((p) => {
+                            console.log(p)
+                            return Number(p.id) === Number(product.id)
+                          })
+
+                          return product.quantity > 0 ? (
+                            <SelectItem
+                              key={product.id}
+                              value={String(product.id)}
+                              disabled={isDisabled}
+                            >
+                              {product.name}
+                            </SelectItem>
+                          ) : (
+                            ''
+                          )
+                        })}
                       </SelectContent>
                     </Select>
-                    {errors?.products?.[i]?.id ? (
-                      <p className="text-xs text-red-500">
-                        {errors.products[i].id.message}
-                      </p>
-                    ) : (
-                      ''
-                    )}
+                    <FormError error={errors?.products?.[i]?.id} />
                   </div>
                 )}
               />
 
-              <Controller
-                control={control}
+              <ProductQuantityController
+                productId={products?.[i]?.id}
                 name={`products.${i}.quantity`}
-                render={({ field: { onChange, value } }) => (
-                  <div className="space-y-1">
-                    <Label>Quantity</Label>
-                    <div className="flex h-10 w-full items-center justify-center gap-2 rounded-md border border-input bg-background px-3 py-2">
-                      <button
-                        type="button"
-                        onClick={() => onChange(decreaseQuantity(value))}
-                        className="p-2"
-                      >
-                        <Minus size={18} />
-                      </button>
-                      <span>{JSON.stringify(value)}</span>
-                      <button
-                        type="button"
-                        onClick={() => onChange(value + 1)}
-                        className="p-2"
-                      >
-                        <Plus size={18} />
-                      </button>
-                    </div>
-                    {errors?.products?.[i]?.quantity ? (
-                      <p className="text-xs text-red-500">
-                        {errors.products[i].quantity.message}
-                      </p>
-                    ) : (
-                      ''
-                    )}
-                  </div>
-                )}
+                control={control}
+                errors={errors?.products?.[i]?.quantity}
               />
             </div>
           ))}
